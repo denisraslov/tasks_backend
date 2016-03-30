@@ -1,5 +1,5 @@
-var User = require('./../models/user');
-var Friendship = require('./../models/friendship');
+var User = require('./../db/models/user');
+var Friendship = require('./../db/models/friendship');
 
 function request(req, res, next) {
   var senderId = req.user._id;
@@ -91,7 +91,7 @@ function decline(req, res, next) {
 
     if (!friendship) {
       return res.status(422).json({
-        error: { message: 'Friendship not found' } 
+        error: { message: 'Friendship not found' }
       });
     }
 

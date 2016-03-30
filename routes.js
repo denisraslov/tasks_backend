@@ -1,5 +1,6 @@
 module.exports.setup = function(app, handlers, ensureAuth) {
   app.post('/api/auth', handlers.auth);
+  app.post('/api/signup', handlers.signup);
 
   app.all('/api/*', ensureAuth);
 

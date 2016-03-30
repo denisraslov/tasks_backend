@@ -1,4 +1,4 @@
-var Friendship = require('./../models/friendship');
+var Friendship = require('./../db/models/friendship');
 
 function getAll(req, res, next) {
   Friendship.getItemsForUser(

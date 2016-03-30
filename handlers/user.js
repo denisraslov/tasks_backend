@@ -1,11 +1,11 @@
-var User = require('./../models/user');
+var User = require('./../db/models/user');
 
 function getById(req, res, next, userId) {
   userId = userId || req.params.user_id;
 
   var user = User.findById(
     userId,
-    'name lastname regDate',
+    'regDate',
     function(err, user) {
       return err ? next(err) : res.json(user);
     }

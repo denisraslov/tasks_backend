@@ -1,37 +1,31 @@
 var express = require('express');
-var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('cookie-session');
 var bodyParser = require('body-parser');
-
-var config = require('./libs/config');
+var db = require('./db/db');
 var routes = require('./routes');
-var passportHelper = require('./libs/passportHelper');
+var cors = require('cors');
+var passportHelper = require('./passportHelper');
 var errorHandler = require('./errorHandler');
+var app;
+var handlers = require('./handlers/main');
+var config = require('./config/config');
 
-mongoose.connect(config.get('db:host'), config.get('db:name'));
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'db connection error:'));
-db.once('open', function() {
-  console.log('Connected to DB');
-});
-mongoose.Error.messages.general.required = 'Field "{PATH}" id required.';
-
+db.init(config)
 passportHelper.init();
 
-var app = express();
+app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: 'secret_key' }));
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-var handlers = require('./handlers/main');
+routes.setup(app, handlers, passportHelper.checkAuth);
 
-routes.setup(app, handlers, passportHelper.ensureAuthenticated);
 app.use(express.static('public'));
-
 app.use(errorHandler);
 
 app.listen(config.get('port'));

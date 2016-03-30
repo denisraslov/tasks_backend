@@ -1,7 +1,7 @@
 var _ = require('underscore');
 
-var User = require('./../models/user');
-var Friendship = require('./../models/friendship');
+var User = require('./../db/models/user');
+var Friendship = require('./../db/models/friendship');
 
 var PAGE_RESULTS_COUNT = 10;
 var USER_FRIENDSHIP_STATUS = {
@@ -31,7 +31,7 @@ function find(req, res, next) {
   } else {
     query = User.find({}, 'name lastname');
   }
-  
+
   query
     .skip(pageNum * PAGE_RESULTS_COUNT)
     .limit(PAGE_RESULTS_COUNT)
@@ -76,7 +76,7 @@ function setUserFriendshipStatus(candidate, mainUser, friendships) {
     candidate.friendshipId = incomingFriendship._id;
     return;
   }
-  
+
   var outcomingFriendship = _.find(friendships.outcoming, function(friendship) {
     return friendship.receiverId.id == candidateId.id;
   });
