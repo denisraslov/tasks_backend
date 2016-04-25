@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
-var session = require('cookie-session');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var db = require('./db/db');
 var routes = require('./routes');
@@ -16,10 +17,16 @@ passportHelper.init();
 
 app = express();
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({ secret: 'secret_key' }));
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:9000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    credentials: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
