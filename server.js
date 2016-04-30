@@ -20,9 +20,15 @@ app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'secret_key' }));
+app.use(session({
+    secret: 'secret_key',
+    name: 'token',
+    cookie: {
+        httpOnly: false
+    }
+}));
 app.use(cors({
-    origin: 'http://localhost:9000',
+    origin: config.get('origin'),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     credentials: true
