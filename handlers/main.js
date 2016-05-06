@@ -4,6 +4,7 @@ var user = require('./user');
 var users = require('./users');
 var friendships = require('./friendships');
 var friendship = require('./friendship');
+var tasks = require('./tasks');
 
 module.exports = {
   auth: auth,
@@ -11,5 +12,6 @@ module.exports = {
   user: user,
   users: users,
   friendships: friendships,
-  friendship: friendship
+  friendship: friendship,
+  tasks: tasks
 };

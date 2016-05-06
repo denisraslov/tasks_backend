@@ -7,6 +7,8 @@ module.exports.setup = function(app, handlers, ensureAuth) {
   app.get('/api/user', handlers.user.getCurrentUser);
   app.get('/api/user/get/:user_id', handlers.user.getById);
 
+  app.get('/api/tasks', handlers.tasks.get);
+
   app.get('/api/users/find/:search_query/:page', handlers.users.find);
   app.get('/api/users/find/:search_query', handlers.users.find);
   app.get('/api/users/find', handlers.users.find);
