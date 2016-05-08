@@ -9,6 +9,22 @@ function get(req, res, next) {
   );
 }
 
+function post(req, res, next) {
+    var data = {},
+        task;
+
+    data.title = req.body.title;
+    data.completed = false;
+    data.userId = req.user._id;
+
+    task = new Task(data);
+
+    task.save(function(err) {
+      return err ? next(err) : res.json(task);
+    });
+}
+
 module.exports = {
-  get: get
+  get: get,
+  post: post
 };
