@@ -5,7 +5,7 @@ function get(req, res, next) {
   Task.getForUser(
     req.user._id,
     function(err, tasks) {
-      return err ? next(err) : res.json(tasks);
+        return err ? next(err) : res.json(tasks);
     }
   );
 }
@@ -32,6 +32,13 @@ function put(req, res, next) {
         req.body.params.completed !== undefined ? data.completed = req.body.params.completed : false;
         req.body.params.title !== undefined ? data.title = req.body.params.title : false;
         req.body.params.description !== undefined ? data.description = req.body.params.description : false;
+        if(req.body.params.date !== undefined){
+            if(req.body.params.date !== null){
+                data.date = new Date(parseInt(req.body.params.date));
+            } else {
+                data.date = null;
+            }
+        }
 
         Task.findByIdAndUpdate(req.body.id, {$set: data}, function(err, task){
             return err ? next(err) : res.json({success: true});

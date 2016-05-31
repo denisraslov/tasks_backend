@@ -5,7 +5,8 @@ var taskSchema = mongoose.Schema({
     userId: { type: ObjectId, required: true, ref: 'User' },
     title: { type: String, required: true, validate: [ titleValidator, 'Title must not be empty' ] },
     description: { type: String },
-    completed: { type: Boolean, required: true }
+    completed: { type: Boolean, required: true },
+    date: { type: Date}
 });
 
 taskSchema.index({ userId: 1 });
